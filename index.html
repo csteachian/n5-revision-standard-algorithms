@@ -1,0 +1,1712 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>N5 Computing Science - Standard Algorithms</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="/_sdk/element_sdk.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        box-sizing: border-box;
+      }
+      .font-mono-code {
+        font-family: "JetBrains Mono", monospace;
+      }
+      .font-heading {
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 20px 5px rgba(99, 102, 241, 0.2);
+        }
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 0.4s ease-out forwards;
+      }
+
+      .code-block {
+        background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+        border-left: 4px solid #818cf8;
+      }
+
+      .tab-active {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        color: white;
+      }
+
+      .quiz-correct {
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        animation: pulse-glow 1s ease-in-out;
+      }
+
+      .quiz-incorrect {
+        background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+      }
+
+      .demo-highlight {
+        background: #fef08a;
+        transition: background 0.3s ease;
+      }
+
+      .nav-item:hover {
+        transform: translateX(4px);
+      }
+
+      .card-hover:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.3);
+      }
+    </style>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  </head>
+  <body class="h-full font-heading bg-slate-900 text-slate-100 overflow-auto">
+    <div id="app" class="h-full w-full flex flex-col lg:flex-row">
+      <!-- Sidebar Navigation -->
+      <nav
+        class="w-full lg:w-72 bg-gradient-to-b from-indigo-950 to-slate-900 p-4 lg:p-6 flex-shrink-0 border-b lg:border-b-0 lg:border-r border-indigo-800/50"
+      >
+        <div class="mb-6 lg:mb-8">
+          <h1
+            id="main-title"
+            class="text-xl lg:text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"
+          >
+            N5 Computing Science
+          </h1>
+          <p id="welcome-message" class="text-sm text-slate-400 mt-1">
+            Standard Algorithms Revision
+          </p>
+        </div>
+        <div
+          class="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible pb-2 lg:pb-0"
+        >
+          <button
+            onclick="showSection('home')"
+            class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 hover:bg-indigo-800/30 text-slate-300 hover:text-white whitespace-nowrap"
+            id="nav-home"
+          >
+            <span class="text-xl">🏠</span>
+            <span class="font-medium">Home</span>
+          </button>
+          <button
+            onclick="showSection('input-validation')"
+            class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 hover:bg-indigo-800/30 text-slate-300 hover:text-white whitespace-nowrap"
+            id="nav-input-validation"
+          >
+            <span class="text-xl">✅</span>
+            <span class="font-medium">Input Validation</span>
+          </button>
+          <button
+            onclick="showSection('traversing')"
+            class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 hover:bg-indigo-800/30 text-slate-300 hover:text-white whitespace-nowrap"
+            id="nav-traversing"
+          >
+            <span class="text-xl">🔄</span>
+            <span class="font-medium">Traversing Array</span>
+          </button>
+          <button
+            onclick="showSection('running-total')"
+            class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 hover:bg-indigo-800/30 text-slate-300 hover:text-white whitespace-nowrap"
+            id="nav-running-total"
+          >
+            <span class="text-xl">➕</span>
+            <span class="font-medium">Running Total</span>
+          </button>
+          <button
+            onclick="showSection('running-total-array')"
+            class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 hover:bg-indigo-800/30 text-slate-300 hover:text-white whitespace-nowrap"
+            id="nav-running-total-array"
+          >
+            <span class="text-xl">📊</span>
+            <span class="font-medium">Running Total + Array</span>
+          </button>
+        </div>
+      </nav>
+      <!-- Main Content Area -->
+      <main class="flex-1 overflow-auto p-4 lg:p-8">
+        <!-- Home Section -->
+        <section id="section-home" class="animate-fade-in">
+          <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-8 lg:mb-12">
+              <h2
+                class="text-3xl lg:text-4xl font-bold mb-4 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+              >
+                Welcome to Standard Algorithms
+              </h2>
+              <p class="text-slate-400 text-lg">
+                Master the four essential algorithms for your N5 exam
+              </p>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4 lg:gap-6">
+              <button
+                onclick="showSection('input-validation')"
+                class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 text-left transition-all duration-300"
+              >
+                <div class="text-4xl mb-4">✅</div>
+                <h3 class="text-xl font-bold text-indigo-300 mb-2">
+                  Input Validation
+                </h3>
+                <p class="text-slate-400 text-sm">
+                  Ensure user input falls within acceptable bounds using
+                  conditional loops
+                </p>
+              </button>
+              <button
+                onclick="showSection('traversing')"
+                class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 text-left transition-all duration-300"
+              >
+                <div class="text-4xl mb-4">🔄</div>
+                <h3 class="text-xl font-bold text-purple-300 mb-2">
+                  Traversing a 1D Array
+                </h3>
+                <p class="text-slate-400 text-sm">
+                  Visit every element in an array to search or process data
+                </p>
+              </button>
+              <button
+                onclick="showSection('running-total')"
+                class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 text-left transition-all duration-300"
+              >
+                <div class="text-4xl mb-4">➕</div>
+                <h3 class="text-xl font-bold text-pink-300 mb-2">
+                  Running Total
+                </h3>
+                <p class="text-slate-400 text-sm">
+                  Accumulate values as they are entered using a loop
+                </p>
+              </button>
+              <button
+                onclick="showSection('running-total-array')"
+                class="card-hover bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl border border-slate-700/50 text-left transition-all duration-300"
+              >
+                <div class="text-4xl mb-4">📊</div>
+                <h3 class="text-xl font-bold text-emerald-300 mb-2">
+                  Running Total + Array
+                </h3>
+                <p class="text-slate-400 text-sm">
+                  Sum all elements stored within an array
+                </p>
+              </button>
+            </div>
+            <div
+              class="mt-8 lg:mt-12 bg-gradient-to-r from-indigo-900/50 to-purple-900/50 rounded-2xl p-6 border border-indigo-700/30"
+            >
+              <h3 class="text-lg font-bold text-indigo-300 mb-3">
+                📚 How to Use This Tool
+              </h3>
+              <ul class="space-y-2 text-slate-300">
+                <li class="flex items-start gap-2">
+                  <span class="text-indigo-400">•</span> Read the notes to
+                  understand each algorithm's purpose
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-indigo-400">•</span> Study the pseudocode
+                  and Python implementations
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-indigo-400">•</span> Test your knowledge
+                  with the quiz questions
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-indigo-400">•</span> Use the interactive
+                  demos to see algorithms in action
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        <!-- Input Validation Section -->
+        <section id="section-input-validation" class="hidden animate-fade-in">
+          <div class="max-w-4xl mx-auto">
+            <h2
+              class="text-3xl font-bold mb-6 text-indigo-300 flex items-center gap-3"
+            >
+              <span class="text-4xl">✅</span> Input Validation
+            </h2>
+            <!-- Tabs -->
+            <div class="flex flex-wrap gap-2 mb-6">
+              <button
+                onclick="showTab('iv', 'notes')"
+                class="tab-btn-iv px-4 py-2 rounded-lg font-medium transition-all tab-active"
+                data-tab="notes"
+              >
+                📝 Notes
+              </button>
+              <button
+                onclick="showTab('iv', 'code')"
+                class="tab-btn-iv px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="code"
+              >
+                💻 Code
+              </button>
+              <button
+                onclick="showTab('iv', 'quiz')"
+                class="tab-btn-iv px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="quiz"
+              >
+                ❓ Quiz
+              </button>
+              <button
+                onclick="showTab('iv', 'demo')"
+                class="tab-btn-iv px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="demo"
+              >
+                🎮 Demo
+              </button>
+            </div>
+            <!-- Notes Tab -->
+            <div id="iv-notes" class="tab-content-iv">
+              <div
+                class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50"
+              >
+                <h3 class="text-xl font-bold text-indigo-300 mb-4">
+                  What is Input Validation?
+                </h3>
+                <p class="text-slate-300 mb-4">
+                  Input validation is a technique used to ensure that data
+                  entered by the user falls within an acceptable range before it
+                  is processed by the program.
+                </p>
+                <h4 class="text-lg font-semibold text-purple-300 mb-2">
+                  Key Points:
+                </h4>
+                <ul class="space-y-2 text-slate-300 mb-4">
+                  <li class="flex items-start gap-2">
+                    <span class="text-indigo-400">•</span> Uses a
+                    <strong class="text-white">conditional loop</strong> (WHILE
+                    loop) to repeatedly ask for input
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-indigo-400">•</span> The loop continues
+                    <strong class="text-white"
+                      >while the input is invalid</strong
+                    >
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-indigo-400">•</span> An
+                    <strong class="text-white">error message</strong> should be
+                    displayed when invalid input is detected
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-indigo-400">•</span> The loop only exits
+                    when <strong class="text-white">valid input</strong> is
+                    provided
+                  </li>
+                </ul>
+                <div
+                  class="bg-indigo-900/30 rounded-xl p-4 border border-indigo-700/30"
+                >
+                  <h4 class="text-lg font-semibold text-indigo-300 mb-2">
+                    💡 Exam Tip
+                  </h4>
+                  <p class="text-slate-300">
+                    Remember: The condition checks for <em>invalid</em> data
+                    (e.g., "while age &lt; 0 OR age &gt; 120"), not valid data!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Code Tab -->
+            <div id="iv-code" class="tab-content-iv hidden">
+              <div class="space-y-6">
+                <div>
+                  <h3 class="text-lg font-bold text-purple-300 mb-3">
+                    📋 Pseudocode
+                  </h3>
+                  <div class="code-block rounded-xl p-4 overflow-x-auto">
+                    <pre class="font-mono-code text-sm text-slate-200">
+RECEIVE age FROM KEYBOARD
+
+WHILE age &lt; 0 OR age &gt; 120 DO
+    SEND "Invalid age. Please enter a value between 0 and 120" TO DISPLAY
+    RECEIVE age FROM KEYBOARD
+END WHILE
+
+SEND "Valid age entered: " &amp; age TO DISPLAY</pre
+                    >
+                  </div>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-emerald-300 mb-3">
+                    🐍 Python Code
+                  </h3>
+                  <div class="code-block rounded-xl p-4 overflow-x-auto">
+                    <pre
+                      class="font-mono-code text-sm text-slate-200"
+                    ><span class="text-pink-400">age</span> = <span class="text-yellow-400">int</span>(<span class="text-yellow-400">input</span>(<span class="text-emerald-400">"Enter your age: "</span>))
+
+<span class="text-purple-400">while</span> age &lt; <span class="text-orange-400">0</span> <span class="text-purple-400">or</span> age &gt; <span class="text-orange-400">120</span>:
+    <span class="text-yellow-400">print</span>(<span class="text-emerald-400">"Invalid age. Please enter a value between 0 and 120"</span>)
+    <span class="text-pink-400">age</span> = <span class="text-yellow-400">int</span>(<span class="text-yellow-400">input</span>(<span class="text-emerald-400">"Enter your age: "</span>))
+
+<span class="text-yellow-400">print</span>(<span class="text-emerald-400">"Valid age entered:"</span>, age)</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Quiz Tab -->
+            <div id="iv-quiz" class="tab-content-iv hidden">
+              <div class="space-y-4" id="iv-quiz-container">
+                <!-- Quiz questions will be rendered here -->
+              </div>
+              <button
+                onclick="resetQuiz('iv')"
+                class="mt-6 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-medium transition-all"
+              >
+                🔄 Reset Quiz
+              </button>
+            </div>
+            <!-- Demo Tab -->
+            <div id="iv-demo" class="tab-content-iv hidden">
+              <div
+                class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50"
+              >
+                <h3 class="text-xl font-bold text-indigo-300 mb-4">
+                  🎮 Interactive Demo: Age Validation
+                </h3>
+                <p class="text-slate-400 mb-4">
+                  Try entering different ages to see input validation in action.
+                  Valid ages are between 0 and 120.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                  <input
+                    type="number"
+                    id="iv-demo-input"
+                    placeholder="Enter an age..."
+                    class="flex-1 px-4 py-3 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                  <button
+                    onclick="validateAge()"
+                    class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-medium transition-all"
+                  >
+                    Validate
+                  </button>
+                </div>
+                <div
+                  id="iv-demo-output"
+                  class="p-4 rounded-xl bg-slate-900/50 border border-slate-700 min-h-[100px]"
+                >
+                  <p class="text-slate-400">
+                    Enter a value to see the validation result...
+                  </p>
+                </div>
+                <div
+                  class="mt-4 p-4 rounded-xl bg-indigo-900/20 border border-indigo-700/30"
+                >
+                  <h4 class="font-semibold text-indigo-300 mb-2">
+                    💡 Algorithm Trace:
+                  </h4>
+                  <div
+                    id="iv-demo-trace"
+                    class="font-mono-code text-sm text-slate-300"
+                  >
+                    <p>Waiting for input...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Traversing Array Section -->
+        <section id="section-traversing" class="hidden animate-fade-in">
+          <div class="max-w-4xl mx-auto">
+            <h2
+              class="text-3xl font-bold mb-6 text-purple-300 flex items-center gap-3"
+            >
+              <span class="text-4xl">🔄</span> Traversing a 1D Array
+            </h2>
+            <!-- Tabs -->
+            <div class="flex flex-wrap gap-2 mb-6">
+              <button
+                onclick="showTab('tr', 'notes')"
+                class="tab-btn-tr px-4 py-2 rounded-lg font-medium transition-all tab-active"
+                data-tab="notes"
+              >
+                📝 Notes
+              </button>
+              <button
+                onclick="showTab('tr', 'code')"
+                class="tab-btn-tr px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="code"
+              >
+                💻 Code
+              </button>
+              <button
+                onclick="showTab('tr', 'quiz')"
+                class="tab-btn-tr px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="quiz"
+              >
+                ❓ Quiz
+              </button>
+              <button
+                onclick="showTab('tr', 'demo')"
+                class="tab-btn-tr px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="demo"
+              >
+                🎮 Demo
+              </button>
+            </div>
+            <!-- Notes Tab -->
+            <div id="tr-notes" class="tab-content-tr">
+              <div
+                class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50"
+              >
+                <h3 class="text-xl font-bold text-purple-300 mb-4">
+                  What is Traversing an Array?
+                </h3>
+                <p class="text-slate-300 mb-4">
+                  Traversing means visiting every element in an array, one at a
+                  time, usually to search for a value, display all items, or
+                  perform an operation on each element.
+                </p>
+                <h4 class="text-lg font-semibold text-indigo-300 mb-2">
+                  Key Points:
+                </h4>
+                <ul class="space-y-2 text-slate-300 mb-4">
+                  <li class="flex items-start gap-2">
+                    <span class="text-purple-400">•</span> Uses a
+                    <strong class="text-white">fixed loop</strong> (FOR loop) to
+                    visit each element
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-purple-400">•</span> The loop runs from
+                    <strong class="text-white">0 to length-1</strong> (in
+                    Python)
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-purple-400">•</span> Each element is
+                    accessed using
+                    <strong class="text-white">array[index]</strong>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-purple-400">•</span> Commonly used for
+                    <strong class="text-white">linear search</strong> to find a
+                    specific value
+                  </li>
+                </ul>
+                <div
+                  class="bg-purple-900/30 rounded-xl p-4 border border-purple-700/30"
+                >
+                  <h4 class="text-lg font-semibold text-purple-300 mb-2">
+                    💡 Exam Tip
+                  </h4>
+                  <p class="text-slate-300">
+                    When searching, use a Boolean variable (found) to track if
+                    the item was located. Set it to False initially and True
+                    when found!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Code Tab -->
+            <div id="tr-code" class="tab-content-tr hidden">
+              <div class="space-y-6">
+                <div>
+                  <h3 class="text-lg font-bold text-purple-300 mb-3">
+                    📋 Pseudocode (Linear Search)
+                  </h3>
+                  <div class="code-block rounded-xl p-4 overflow-x-auto">
+                    <pre class="font-mono-code text-sm text-slate-200">
+SET names TO ["Alice", "Bob", "Charlie", "Diana", "Eve"]
+RECEIVE searchName FROM KEYBOARD
+SET found TO FALSE
+
+FOR index FROM 0 TO LENGTH(names) - 1 DO
+    IF names[index] = searchName THEN
+        SET found TO TRUE
+        SEND "Found at position " &amp; index TO DISPLAY
+    END IF
+END FOR
+
+IF found = FALSE THEN
+    SEND "Name not found" TO DISPLAY
+END IF</pre
+                    >
+                  </div>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-emerald-300 mb-3">
+                    🐍 Python Code
+                  </h3>
+                  <div class="code-block rounded-xl p-4 overflow-x-auto">
+                    <pre
+                      class="font-mono-code text-sm text-slate-200"
+                    ><span class="text-pink-400">names</span> = [<span class="text-emerald-400">"Alice"</span>, <span class="text-emerald-400">"Bob"</span>, <span class="text-emerald-400">"Charlie"</span>, <span class="text-emerald-400">"Diana"</span>, <span class="text-emerald-400">"Eve"</span>]
+<span class="text-pink-400">search_name</span> = <span class="text-yellow-400">input</span>(<span class="text-emerald-400">"Enter name to search: "</span>)
+<span class="text-pink-400">found</span> = <span class="text-orange-400">False</span>
+
+<span class="text-purple-400">for</span> index <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-yellow-400">len</span>(names)):
+    <span class="text-purple-400">if</span> names[index] == search_name:
+        <span class="text-pink-400">found</span> = <span class="text-orange-400">True</span>
+        <span class="text-yellow-400">print</span>(<span class="text-emerald-400">"Found at position"</span>, index)
+
+<span class="text-purple-400">if</span> <span class="text-purple-400">not</span> found:
+    <span class="text-yellow-400">print</span>(<span class="text-emerald-400">"Name not found"</span>)</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Quiz Tab -->
+            <div id="tr-quiz" class="tab-content-tr hidden">
+              <div class="space-y-4" id="tr-quiz-container">
+                <!-- Quiz questions will be rendered here -->
+              </div>
+              <button
+                onclick="resetQuiz('tr')"
+                class="mt-6 px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-xl font-medium transition-all"
+              >
+                🔄 Reset Quiz
+              </button>
+            </div>
+            <!-- Demo Tab -->
+            <div id="tr-demo" class="tab-content-tr hidden">
+              <div
+                class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50"
+              >
+                <h3 class="text-xl font-bold text-purple-300 mb-4">
+                  🎮 Interactive Demo: Linear Search
+                </h3>
+                <p class="text-slate-400 mb-4">
+                  Watch the algorithm traverse through the array to find a name.
+                </p>
+                <div class="mb-4">
+                  <p class="text-slate-300 mb-2">Array contents:</p>
+                  <div class="flex flex-wrap gap-2" id="tr-demo-array">
+                    <span
+                      class="px-4 py-2 bg-slate-700 rounded-lg font-mono-code"
+                      data-index="0"
+                      >Alice</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-slate-700 rounded-lg font-mono-code"
+                      data-index="1"
+                      >Bob</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-slate-700 rounded-lg font-mono-code"
+                      data-index="2"
+                      >Charlie</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-slate-700 rounded-lg font-mono-code"
+                      data-index="3"
+                      >Diana</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-slate-700 rounded-lg font-mono-code"
+                      data-index="4"
+                      >Eve</span
+                    >
+                  </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                  <input
+                    type="text"
+                    id="tr-demo-input"
+                    placeholder="Enter name to search..."
+                    class="flex-1 px-4 py-3 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                  <button
+                    onclick="searchArray()"
+                    class="px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-xl font-medium transition-all"
+                  >
+                    Search
+                  </button>
+                </div>
+                <div
+                  id="tr-demo-output"
+                  class="p-4 rounded-xl bg-slate-900/50 border border-slate-700 min-h-[100px]"
+                >
+                  <p class="text-slate-400">
+                    Enter a name to search the array...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Running Total Section -->
+        <section id="section-running-total" class="hidden animate-fade-in">
+          <div class="max-w-4xl mx-auto">
+            <h2
+              class="text-3xl font-bold mb-6 text-pink-300 flex items-center gap-3"
+            >
+              <span class="text-4xl">➕</span> Running Total
+            </h2>
+            <!-- Tabs -->
+            <div class="flex flex-wrap gap-2 mb-6">
+              <button
+                onclick="showTab('rt', 'notes')"
+                class="tab-btn-rt px-4 py-2 rounded-lg font-medium transition-all tab-active"
+                data-tab="notes"
+              >
+                📝 Notes
+              </button>
+              <button
+                onclick="showTab('rt', 'code')"
+                class="tab-btn-rt px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="code"
+              >
+                💻 Code
+              </button>
+              <button
+                onclick="showTab('rt', 'quiz')"
+                class="tab-btn-rt px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="quiz"
+              >
+                ❓ Quiz
+              </button>
+              <button
+                onclick="showTab('rt', 'demo')"
+                class="tab-btn-rt px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="demo"
+              >
+                🎮 Demo
+              </button>
+            </div>
+            <!-- Notes Tab -->
+            <div id="rt-notes" class="tab-content-rt">
+              <div
+                class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50"
+              >
+                <h3 class="text-xl font-bold text-pink-300 mb-4">
+                  What is a Running Total?
+                </h3>
+                <p class="text-slate-300 mb-4">
+                  A running total is a technique where values are accumulated as
+                  they are entered. Each new value is added to a total variable
+                  that keeps track of the sum.
+                </p>
+                <h4 class="text-lg font-semibold text-indigo-300 mb-2">
+                  Key Points:
+                </h4>
+                <ul class="space-y-2 text-slate-300 mb-4">
+                  <li class="flex items-start gap-2">
+                    <span class="text-pink-400">•</span> The total variable must
+                    be
+                    <strong class="text-white">initialised to 0</strong> before
+                    the loop
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-pink-400">•</span> Uses
+                    <strong class="text-white">total = total + value</strong> to
+                    accumulate
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-pink-400">•</span> Can use either a
+                    <strong class="text-white">FOR loop</strong> (fixed count)
+                    or <strong class="text-white">WHILE loop</strong>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-pink-400">•</span> The final total is
+                    displayed
+                    <strong class="text-white">after the loop ends</strong>
+                  </li>
+                </ul>
+                <div
+                  class="bg-pink-900/30 rounded-xl p-4 border border-pink-700/30"
+                >
+                  <h4 class="text-lg font-semibold text-pink-300 mb-2">
+                    💡 Exam Tip
+                  </h4>
+                  <p class="text-slate-300">
+                    Always remember to initialise total = 0 BEFORE the loop!
+                    This is a common mistake in exams.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Code Tab -->
+            <div id="rt-code" class="tab-content-rt hidden">
+              <div class="space-y-6">
+                <div>
+                  <h3 class="text-lg font-bold text-pink-300 mb-3">
+                    📋 Pseudocode
+                  </h3>
+                  <div class="code-block rounded-xl p-4 overflow-x-auto">
+                    <pre class="font-mono-code text-sm text-slate-200">
+SET total TO 0
+
+FOR counter FROM 1 TO 5 DO
+    RECEIVE number FROM KEYBOARD
+    SET total TO total + number
+END FOR
+
+SEND "The total is: " &amp; total TO DISPLAY</pre
+                    >
+                  </div>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-emerald-300 mb-3">
+                    🐍 Python Code
+                  </h3>
+                  <div class="code-block rounded-xl p-4 overflow-x-auto">
+                    <pre
+                      class="font-mono-code text-sm text-slate-200"
+                    ><span class="text-pink-400">total</span> = <span class="text-orange-400">0</span>
+
+<span class="text-purple-400">for</span> counter <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-orange-400">5</span>):
+    <span class="text-pink-400">number</span> = <span class="text-yellow-400">int</span>(<span class="text-yellow-400">input</span>(<span class="text-emerald-400">"Enter a number: "</span>))
+    <span class="text-pink-400">total</span> = total + number
+
+<span class="text-yellow-400">print</span>(<span class="text-emerald-400">"The total is:"</span>, total)</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Quiz Tab -->
+            <div id="rt-quiz" class="tab-content-rt hidden">
+              <div class="space-y-4" id="rt-quiz-container">
+                <!-- Quiz questions will be rendered here -->
+              </div>
+              <button
+                onclick="resetQuiz('rt')"
+                class="mt-6 px-6 py-3 bg-pink-600 hover:bg-pink-500 rounded-xl font-medium transition-all"
+              >
+                🔄 Reset Quiz
+              </button>
+            </div>
+            <!-- Demo Tab -->
+            <div id="rt-demo" class="tab-content-rt hidden">
+              <div
+                class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50"
+              >
+                <h3 class="text-xl font-bold text-pink-300 mb-4">
+                  🎮 Interactive Demo: Running Total
+                </h3>
+                <p class="text-slate-400 mb-4">
+                  Add 5 numbers and watch the running total accumulate.
+                </p>
+                <div class="mb-4 p-4 bg-slate-900/50 rounded-xl">
+                  <div class="flex justify-between items-center mb-2">
+                    <span class="text-slate-300"
+                      >Numbers entered:
+                      <span id="rt-demo-count" class="text-pink-400 font-bold"
+                        >0</span
+                      >/5</span
+                    >
+                    <span class="text-slate-300"
+                      >Running Total:
+                      <span
+                        id="rt-demo-total"
+                        class="text-emerald-400 font-bold text-xl"
+                        >0</span
+                      ></span
+                    >
+                  </div>
+                  <div class="flex flex-wrap gap-2" id="rt-demo-numbers">
+                    <!-- Numbers will appear here -->
+                  </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                  <input
+                    type="number"
+                    id="rt-demo-input"
+                    placeholder="Enter a number..."
+                    class="flex-1 px-4 py-3 rounded-xl bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                  />
+                  <button
+                    onclick="addToTotal()"
+                    id="rt-demo-btn"
+                    class="px-6 py-3 bg-pink-600 hover:bg-pink-500 rounded-xl font-medium transition-all"
+                  >
+                    Add
+                  </button>
+                  <button
+                    onclick="resetRunningTotal()"
+                    class="px-6 py-3 bg-slate-600 hover:bg-slate-500 rounded-xl font-medium transition-all"
+                  >
+                    Reset
+                  </button>
+                </div>
+                <div
+                  id="rt-demo-trace"
+                  class="p-4 rounded-xl bg-indigo-900/20 border border-indigo-700/30 font-mono-code text-sm"
+                >
+                  <p class="text-slate-300">
+                    total = 0 <span class="text-slate-500">// Initialised</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Running Total with Array Section -->
+        <section
+          id="section-running-total-array"
+          class="hidden animate-fade-in"
+        >
+          <div class="max-w-4xl mx-auto">
+            <h2
+              class="text-3xl font-bold mb-6 text-emerald-300 flex items-center gap-3"
+            >
+              <span class="text-4xl">📊</span> Running Total with 1D Array
+            </h2>
+            <!-- Tabs -->
+            <div class="flex flex-wrap gap-2 mb-6">
+              <button
+                onclick="showTab('rta', 'notes')"
+                class="tab-btn-rta px-4 py-2 rounded-lg font-medium transition-all tab-active"
+                data-tab="notes"
+              >
+                📝 Notes
+              </button>
+              <button
+                onclick="showTab('rta', 'code')"
+                class="tab-btn-rta px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="code"
+              >
+                💻 Code
+              </button>
+              <button
+                onclick="showTab('rta', 'quiz')"
+                class="tab-btn-rta px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="quiz"
+              >
+                ❓ Quiz
+              </button>
+              <button
+                onclick="showTab('rta', 'demo')"
+                class="tab-btn-rta px-4 py-2 rounded-lg font-medium transition-all bg-slate-800 text-slate-300 hover:bg-slate-700"
+                data-tab="demo"
+              >
+                🎮 Demo
+              </button>
+            </div>
+            <!-- Notes Tab -->
+            <div id="rta-notes" class="tab-content-rta">
+              <div
+                class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50"
+              >
+                <h3 class="text-xl font-bold text-emerald-300 mb-4">
+                  What is Running Total with an Array?
+                </h3>
+                <p class="text-slate-300 mb-4">
+                  This combines traversing an array with a running total.
+                  Instead of getting values from user input, we sum all the
+                  values that are already stored in an array.
+                </p>
+                <h4 class="text-lg font-semibold text-indigo-300 mb-2">
+                  Key Points:
+                </h4>
+                <ul class="space-y-2 text-slate-300 mb-4">
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400">•</span> Combines
+                    <strong class="text-white">traversal</strong> and
+                    <strong class="text-white">running total</strong> techniques
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400">•</span> Total is initialised
+                    to <strong class="text-white">0 before the loop</strong>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400">•</span> Uses
+                    <strong class="text-white"
+                      >total = total + array[index]</strong
+                    >
+                    to accumulate
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-emerald-400">•</span> Loop runs from
+                    <strong class="text-white">0 to length-1</strong> to visit
+                    every element
+                  </li>
+                </ul>
+                <div
+                  class="bg-emerald-900/30 rounded-xl p-4 border border-emerald-700/30"
+                >
+                  <h4 class="text-lg font-semibold text-emerald-300 mb-2">
+                    💡 Exam Tip
+                  </h4>
+                  <p class="text-slate-300">
+                    This algorithm is often used to calculate averages - just
+                    divide the total by the length of the array after the loop!
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- Code Tab -->
+            <div id="rta-code" class="tab-content-rta hidden">
+              <div class="space-y-6">
+                <div>
+                  <h3 class="text-lg font-bold text-emerald-300 mb-3">
+                    📋 Pseudocode
+                  </h3>
+                  <div class="code-block rounded-xl p-4 overflow-x-auto">
+                    <pre class="font-mono-code text-sm text-slate-200">
+SET scores TO [85, 92, 78, 95, 88]
+SET total TO 0
+
+FOR index FROM 0 TO LENGTH(scores) - 1 DO
+    SET total TO total + scores[index]
+END FOR
+
+SET average TO total / LENGTH(scores)
+SEND "Total: " &amp; total TO DISPLAY
+SEND "Average: " &amp; average TO DISPLAY</pre
+                    >
+                  </div>
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-emerald-300 mb-3">
+                    🐍 Python Code
+                  </h3>
+                  <div class="code-block rounded-xl p-4 overflow-x-auto">
+                    <pre
+                      class="font-mono-code text-sm text-slate-200"
+                    ><span class="text-pink-400">scores</span> = [<span class="text-orange-400">85</span>, <span class="text-orange-400">92</span>, <span class="text-orange-400">78</span>, <span class="text-orange-400">95</span>, <span class="text-orange-400">88</span>]
+<span class="text-pink-400">total</span> = <span class="text-orange-400">0</span>
+
+<span class="text-purple-400">for</span> index <span class="text-purple-400">in</span> <span class="text-yellow-400">range</span>(<span class="text-yellow-400">len</span>(scores)):
+    <span class="text-pink-400">total</span> = total + scores[index]
+
+<span class="text-pink-400">average</span> = total / <span class="text-yellow-400">len</span>(scores)
+<span class="text-yellow-400">print</span>(<span class="text-emerald-400">"Total:"</span>, total)
+<span class="text-yellow-400">print</span>(<span class="text-emerald-400">"Average:"</span>, average)</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Quiz Tab -->
+            <div id="rta-quiz" class="tab-content-rta hidden">
+              <div class="space-y-4" id="rta-quiz-container">
+                <!-- Quiz questions will be rendered here -->
+              </div>
+              <button
+                onclick="resetQuiz('rta')"
+                class="mt-6 px-6 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-medium transition-all"
+              >
+                🔄 Reset Quiz
+              </button>
+            </div>
+            <!-- Demo Tab -->
+            <div id="rta-demo" class="tab-content-rta hidden">
+              <div
+                class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700/50"
+              >
+                <h3 class="text-xl font-bold text-emerald-300 mb-4">
+                  🎮 Interactive Demo: Sum Array Elements
+                </h3>
+                <p class="text-slate-400 mb-4">
+                  Watch the algorithm traverse through the array and calculate
+                  the running total.
+                </p>
+                <div class="mb-4">
+                  <p class="text-slate-300 mb-2">Array: scores</p>
+                  <div class="flex flex-wrap gap-2" id="rta-demo-array">
+                    <span
+                      class="px-4 py-2 bg-slate-700 rounded-lg font-mono-code"
+                      data-index="0"
+                      >85</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-slate-700 rounded-lg font-mono-code"
+                      data-index="1"
+                      >92</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-slate-700 rounded-lg font-mono-code"
+                      data-index="2"
+                      >78</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-slate-700 rounded-lg font-mono-code"
+                      data-index="3"
+                      >95</span
+                    >
+                    <span
+                      class="px-4 py-2 bg-slate-700 rounded-lg font-mono-code"
+                      data-index="4"
+                      >88</span
+                    >
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-4 mb-4">
+                  <button
+                    onclick="runArrayTotal()"
+                    id="rta-demo-btn"
+                    class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-xl font-medium transition-all"
+                  >
+                    ▶️ Run Algorithm
+                  </button>
+                  <button
+                    onclick="resetArrayTotal()"
+                    class="px-6 py-3 bg-slate-600 hover:bg-slate-500 rounded-xl font-medium transition-all"
+                  >
+                    🔄 Reset
+                  </button>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <div
+                    class="p-4 rounded-xl bg-slate-900/50 border border-slate-700"
+                  >
+                    <p class="text-slate-400 text-sm mb-1">Running Total</p>
+                    <p
+                      id="rta-demo-total"
+                      class="text-3xl font-bold text-emerald-400"
+                    >
+                      0
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 rounded-xl bg-slate-900/50 border border-slate-700"
+                  >
+                    <p class="text-slate-400 text-sm mb-1">
+                      Average (when complete)
+                    </p>
+                    <p
+                      id="rta-demo-average"
+                      class="text-3xl font-bold text-purple-400"
+                    >
+                      -
+                    </p>
+                  </div>
+                </div>
+                <div
+                  id="rta-demo-trace"
+                  class="mt-4 p-4 rounded-xl bg-indigo-900/20 border border-indigo-700/30 font-mono-code text-sm"
+                >
+                  <p class="text-slate-300">
+                    total = 0
+                    <span class="text-slate-500">// Click Run to start</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+      // Configuration
+      const defaultConfig = {
+        main_title: "N5 Computing Science",
+        welcome_message: "Standard Algorithms Revision",
+        primary_color: "#4f46e5",
+        secondary_color: "#1e1b4b",
+        text_color: "#e2e8f0",
+        accent_color: "#818cf8",
+        background_color: "#0f172a",
+        font_family: "Space Grotesk",
+      };
+
+      let config = { ...defaultConfig };
+
+      // Quiz Data
+      const quizData = {
+        iv: [
+          {
+            question: "What type of loop is used for input validation?",
+            options: ["FOR loop", "WHILE loop", "REPEAT loop", "DO loop"],
+            correct: 1,
+            explanation:
+              "A WHILE loop (conditional loop) is used because we don't know how many times invalid input will be entered.",
+          },
+          {
+            question:
+              "What should the condition in an input validation loop check for?",
+            options: ["Valid data", "Invalid data", "Any data", "No data"],
+            correct: 1,
+            explanation:
+              "The condition checks for INVALID data - the loop continues WHILE the data is invalid.",
+          },
+          {
+            question:
+              "If validating age between 0 and 120, which condition is correct?",
+            options: [
+              "age >= 0 AND age <= 120",
+              "age < 0 OR age > 120",
+              "age > 0 AND age < 120",
+              "age == 0 OR age == 120",
+            ],
+            correct: 1,
+            explanation:
+              "We check for invalid data: age < 0 OR age > 120 means outside the valid range.",
+          },
+        ],
+        tr: [
+          {
+            question:
+              "What type of loop is typically used to traverse an array?",
+            options: ["WHILE loop", "FOR loop", "DO-WHILE loop", "REPEAT loop"],
+            correct: 1,
+            explanation:
+              "A FOR loop is used because we know exactly how many elements are in the array.",
+          },
+          {
+            question:
+              "In Python, if an array has 5 elements, what are the valid indices?",
+            options: ["1 to 5", "0 to 5", "0 to 4", "1 to 4"],
+            correct: 2,
+            explanation:
+              "Python arrays are zero-indexed, so 5 elements have indices 0, 1, 2, 3, 4 (0 to length-1).",
+          },
+          {
+            question:
+              "What should a Boolean 'found' variable be initialised to when searching?",
+            options: ["True", "False", "0", "1"],
+            correct: 1,
+            explanation:
+              "It starts as False because we haven't found anything yet. It becomes True only if we find the item.",
+          },
+        ],
+        rt: [
+          {
+            question: "What value should the total variable be initialised to?",
+            options: ["1", "0", "-1", "The first number"],
+            correct: 1,
+            explanation:
+              "Total must be initialised to 0 so the first addition gives the correct result.",
+          },
+          {
+            question: "Which operation is used to add to a running total?",
+            options: [
+              "total = value",
+              "total = total - value",
+              "total = total + value",
+              "total = total * value",
+            ],
+            correct: 2,
+            explanation:
+              "total = total + value adds the new value to the existing total.",
+          },
+          {
+            question: "When should the running total be displayed?",
+            options: [
+              "Before the loop",
+              "Inside the loop",
+              "After the loop ends",
+              "Never",
+            ],
+            correct: 2,
+            explanation:
+              "The final total is displayed after all values have been added in the loop.",
+          },
+        ],
+        rta: [
+          {
+            question:
+              "Running total with array combines which two standard algorithms?",
+            options: [
+              "Input validation and traversal",
+              "Traversal and running total",
+              "Running total and input validation",
+              "Two running totals",
+            ],
+            correct: 1,
+            explanation:
+              "It combines traversing an array (to visit each element) with a running total (to sum them).",
+          },
+          {
+            question: "How do you access each element when summing an array?",
+            options: [
+              "array(index)",
+              "array[index]",
+              "array.index",
+              "index[array]",
+            ],
+            correct: 1,
+            explanation:
+              "array[index] is the correct syntax to access an element at a specific position.",
+          },
+          {
+            question:
+              "To calculate the average after summing, you divide total by:",
+            options: [
+              "The largest value",
+              "The smallest value",
+              "The length of the array",
+              "2",
+            ],
+            correct: 2,
+            explanation:
+              "Average = total / length gives the mean of all values in the array.",
+          },
+        ],
+      };
+
+      const quizState = {
+        iv: {},
+        tr: {},
+        rt: {},
+        rta: {},
+      };
+
+      // Running total demo state
+      let rtDemoState = {
+        count: 0,
+        total: 0,
+        numbers: [],
+      };
+
+      // Navigation
+      function showSection(sectionId) {
+        document
+          .querySelectorAll("section")
+          .forEach((s) => s.classList.add("hidden"));
+        document
+          .getElementById(`section-${sectionId}`)
+          .classList.remove("hidden");
+
+        document.querySelectorAll("nav button").forEach((btn) => {
+          btn.classList.remove("bg-indigo-800/50", "text-white");
+          btn.classList.add("text-slate-300");
+        });
+        document
+          .getElementById(`nav-${sectionId}`)
+          .classList.add("bg-indigo-800/50", "text-white");
+        document
+          .getElementById(`nav-${sectionId}`)
+          .classList.remove("text-slate-300");
+      }
+
+      // Tabs
+      function showTab(prefix, tabName) {
+        document
+          .querySelectorAll(`.tab-content-${prefix}`)
+          .forEach((t) => t.classList.add("hidden"));
+        document
+          .getElementById(`${prefix}-${tabName}`)
+          .classList.remove("hidden");
+
+        document.querySelectorAll(`.tab-btn-${prefix}`).forEach((btn) => {
+          btn.classList.remove("tab-active");
+          btn.classList.add("bg-slate-800", "text-slate-300");
+        });
+
+        const activeBtn = document.querySelector(
+          `.tab-btn-${prefix}[data-tab="${tabName}"]`,
+        );
+        activeBtn.classList.add("tab-active");
+        activeBtn.classList.remove("bg-slate-800", "text-slate-300");
+      }
+
+      // Quiz Functions
+      function renderQuiz(prefix) {
+        const container = document.getElementById(`${prefix}-quiz-container`);
+        const questions = quizData[prefix];
+
+        container.innerHTML = questions
+          .map(
+            (q, qIndex) => `
+        <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700/50" id="${prefix}-q${qIndex}">
+          <p class="font-semibold text-white mb-4">${qIndex + 1}. ${q.question}</p>
+          <div class="space-y-2">
+            ${q.options
+              .map(
+                (opt, oIndex) => `
+              <button 
+                onclick="checkAnswer('${prefix}', ${qIndex}, ${oIndex})"
+                class="w-full text-left px-4 py-3 rounded-lg bg-slate-700/50 hover:bg-slate-600/50 transition-all border border-slate-600/50 text-slate-200 ${prefix}-q${qIndex}-opt"
+                id="${prefix}-q${qIndex}-o${oIndex}"
+              >
+                ${String.fromCharCode(65 + oIndex)}. ${opt}
+              </button>
+            `,
+              )
+              .join("")}
+          </div>
+          <div id="${prefix}-q${qIndex}-feedback" class="mt-4 hidden"></div>
+        </div>
+      `,
+          )
+          .join("");
+      }
+
+      function checkAnswer(prefix, qIndex, selectedOption) {
+        if (quizState[prefix][qIndex] !== undefined) return;
+
+        quizState[prefix][qIndex] = selectedOption;
+        const question = quizData[prefix][qIndex];
+        const isCorrect = selectedOption === question.correct;
+
+        const buttons = document.querySelectorAll(`.${prefix}-q${qIndex}-opt`);
+        buttons.forEach((btn, idx) => {
+          btn.disabled = true;
+          btn.classList.remove("hover:bg-slate-600/50");
+          if (idx === question.correct) {
+            btn.classList.add("quiz-correct", "text-white");
+          } else if (idx === selectedOption && !isCorrect) {
+            btn.classList.add("quiz-incorrect", "text-white");
+          }
+        });
+
+        const feedback = document.getElementById(
+          `${prefix}-q${qIndex}-feedback`,
+        );
+        feedback.classList.remove("hidden");
+        feedback.innerHTML = `
+        <div class="p-4 rounded-lg ${isCorrect ? "bg-emerald-900/30 border border-emerald-700/30" : "bg-red-900/30 border border-red-700/30"}">
+          <p class="font-semibold ${isCorrect ? "text-emerald-400" : "text-red-400"} mb-1">
+            ${isCorrect ? "✓ Correct!" : "✗ Incorrect"}
+          </p>
+          <p class="text-slate-300 text-sm">${question.explanation}</p>
+        </div>
+      `;
+      }
+
+      function resetQuiz(prefix) {
+        quizState[prefix] = {};
+        renderQuiz(prefix);
+      }
+
+      // Input Validation Demo
+      function validateAge() {
+        const input = document.getElementById("iv-demo-input");
+        const output = document.getElementById("iv-demo-output");
+        const trace = document.getElementById("iv-demo-trace");
+        const age = parseInt(input.value);
+
+        if (isNaN(age)) {
+          output.innerHTML = `<p class="text-yellow-400">⚠️ Please enter a valid number</p>`;
+          return;
+        }
+
+        if (age < 0 || age > 120) {
+          output.innerHTML = `
+          <p class="text-red-400 font-semibold">❌ Invalid age: ${age}</p>
+          <p class="text-slate-300 mt-2">Age must be between 0 and 120. Please try again.</p>
+        `;
+          trace.innerHTML = `
+          <p class="text-slate-300">age = ${age}</p>
+          <p class="text-pink-400">WHILE ${age} < 0 OR ${age} > 120 → <span class="text-yellow-400">TRUE</span></p>
+          <p class="text-slate-400 ml-4">// Loop continues - ask for input again</p>
+        `;
+        } else {
+          output.innerHTML = `
+          <p class="text-emerald-400 font-semibold">✓ Valid age: ${age}</p>
+          <p class="text-slate-300 mt-2">The input validation loop would now exit.</p>
+        `;
+          trace.innerHTML = `
+          <p class="text-slate-300">age = ${age}</p>
+          <p class="text-emerald-400">WHILE ${age} < 0 OR ${age} > 120 → <span class="text-emerald-400">FALSE</span></p>
+          <p class="text-slate-400 ml-4">// Loop exits - valid input received</p>
+        `;
+        }
+      }
+
+      // Traversing Array Demo
+      async function searchArray() {
+        const input = document.getElementById("tr-demo-input");
+        const output = document.getElementById("tr-demo-output");
+        const searchName = input.value.trim();
+        const names = ["Alice", "Bob", "Charlie", "Diana", "Eve"];
+
+        if (!searchName) {
+          output.innerHTML = `<p class="text-yellow-400">⚠️ Please enter a name to search</p>`;
+          return;
+        }
+
+        // Reset highlighting
+        document.querySelectorAll("#tr-demo-array span").forEach((el) => {
+          el.classList.remove("demo-highlight", "bg-emerald-600", "bg-red-600");
+          el.classList.add("bg-slate-700");
+        });
+
+        let found = false;
+        let foundIndex = -1;
+
+        output.innerHTML = `<p class="text-indigo-400">🔍 Searching for "${searchName}"...</p>`;
+
+        for (let i = 0; i < names.length; i++) {
+          const element = document.querySelector(
+            `#tr-demo-array span[data-index="${i}"]`,
+          );
+          element.classList.remove("bg-slate-700");
+          element.classList.add("demo-highlight");
+
+          await new Promise((resolve) => setTimeout(resolve, 500));
+
+          if (names[i].toLowerCase() === searchName.toLowerCase()) {
+            found = true;
+            foundIndex = i;
+            element.classList.remove("demo-highlight");
+            element.classList.add("bg-emerald-600");
+            break;
+          } else {
+            element.classList.remove("demo-highlight");
+            element.classList.add("bg-slate-700");
+          }
+        }
+
+        if (found) {
+          output.innerHTML = `
+          <p class="text-emerald-400 font-semibold">✓ Found "${names[foundIndex]}" at index ${foundIndex}</p>
+          <p class="text-slate-300 mt-2">The found variable is now TRUE</p>
+        `;
+        } else {
+          output.innerHTML = `
+          <p class="text-red-400 font-semibold">✗ "${searchName}" not found in the array</p>
+          <p class="text-slate-300 mt-2">The found variable remains FALSE</p>
+        `;
+        }
+      }
+
+      // Running Total Demo
+      function addToTotal() {
+        if (rtDemoState.count >= 5) return;
+
+        const input = document.getElementById("rt-demo-input");
+        const number = parseInt(input.value);
+
+        if (isNaN(number)) {
+          return;
+        }
+
+        rtDemoState.count++;
+        rtDemoState.total += number;
+        rtDemoState.numbers.push(number);
+
+        document.getElementById("rt-demo-count").textContent =
+          rtDemoState.count;
+        document.getElementById("rt-demo-total").textContent =
+          rtDemoState.total;
+
+        const numbersContainer = document.getElementById("rt-demo-numbers");
+        numbersContainer.innerHTML = rtDemoState.numbers
+          .map(
+            (n, i) =>
+              `<span class="px-3 py-1 bg-pink-600/50 rounded-lg font-mono-code">${n}</span>`,
+          )
+          .join("");
+
+        const trace = document.getElementById("rt-demo-trace");
+        trace.innerHTML = rtDemoState.numbers
+          .map((n, i) => {
+            const runningSum = rtDemoState.numbers
+              .slice(0, i + 1)
+              .reduce((a, b) => a + b, 0);
+            return `<p class="text-slate-300">total = ${i === 0 ? 0 : rtDemoState.numbers.slice(0, i).reduce((a, b) => a + b, 0)} + ${n} = ${runningSum}</p>`;
+          })
+          .join("");
+
+        if (rtDemoState.count >= 5) {
+          trace.innerHTML += `<p class="text-emerald-400 mt-2">// Loop complete - Final total: ${rtDemoState.total}</p>`;
+          document.getElementById("rt-demo-btn").disabled = true;
+          document.getElementById("rt-demo-btn").classList.add("opacity-50");
+        }
+
+        input.value = "";
+        input.focus();
+      }
+
+      function resetRunningTotal() {
+        rtDemoState = { count: 0, total: 0, numbers: [] };
+        document.getElementById("rt-demo-count").textContent = "0";
+        document.getElementById("rt-demo-total").textContent = "0";
+        document.getElementById("rt-demo-numbers").innerHTML = "";
+        document.getElementById("rt-demo-trace").innerHTML =
+          `<p class="text-slate-300">total = 0 <span class="text-slate-500">// Initialised</span></p>`;
+        document.getElementById("rt-demo-btn").disabled = false;
+        document.getElementById("rt-demo-btn").classList.remove("opacity-50");
+        document.getElementById("rt-demo-input").value = "";
+      }
+
+      // Running Total Array Demo
+      async function runArrayTotal() {
+        const scores = [85, 92, 78, 95, 88];
+        const btn = document.getElementById("rta-demo-btn");
+        btn.disabled = true;
+        btn.classList.add("opacity-50");
+
+        // Reset
+        document.querySelectorAll("#rta-demo-array span").forEach((el) => {
+          el.classList.remove("demo-highlight", "bg-emerald-600");
+          el.classList.add("bg-slate-700");
+        });
+        document.getElementById("rta-demo-total").textContent = "0";
+        document.getElementById("rta-demo-average").textContent = "-";
+
+        let total = 0;
+        const trace = document.getElementById("rta-demo-trace");
+        trace.innerHTML = `<p class="text-slate-300">total = 0 <span class="text-slate-500">// Initialised</span></p>`;
+
+        for (let i = 0; i < scores.length; i++) {
+          const element = document.querySelector(
+            `#rta-demo-array span[data-index="${i}"]`,
+          );
+          element.classList.remove("bg-slate-700");
+          element.classList.add("demo-highlight");
+
+          await new Promise((resolve) => setTimeout(resolve, 600));
+
+          total += scores[i];
+          document.getElementById("rta-demo-total").textContent = total;
+
+          trace.innerHTML += `<p class="text-slate-300">total = ${total - scores[i]} + scores[${i}] → ${total - scores[i]} + ${scores[i]} = <span class="text-emerald-400">${total}</span></p>`;
+
+          element.classList.remove("demo-highlight");
+          element.classList.add("bg-emerald-600");
+
+          await new Promise((resolve) => setTimeout(resolve, 400));
+        }
+
+        const average = (total / scores.length).toFixed(1);
+        document.getElementById("rta-demo-average").textContent = average;
+        trace.innerHTML += `<p class="text-purple-400 mt-2">average = ${total} / ${scores.length} = ${average}</p>`;
+
+        btn.disabled = false;
+        btn.classList.remove("opacity-50");
+      }
+
+      function resetArrayTotal() {
+        document.querySelectorAll("#rta-demo-array span").forEach((el) => {
+          el.classList.remove("demo-highlight", "bg-emerald-600");
+          el.classList.add("bg-slate-700");
+        });
+        document.getElementById("rta-demo-total").textContent = "0";
+        document.getElementById("rta-demo-average").textContent = "-";
+        document.getElementById("rta-demo-trace").innerHTML =
+          `<p class="text-slate-300">total = 0 <span class="text-slate-500">// Click Run to start</span></p>`;
+      }
+
+      // Config change handler
+      function onConfigChange(newConfig) {
+        document.getElementById("main-title").textContent =
+          newConfig.main_title || defaultConfig.main_title;
+        document.getElementById("welcome-message").textContent =
+          newConfig.welcome_message || defaultConfig.welcome_message;
+      }
+
+      // Initialize
+      function init() {
+        // Render all quizzes
+        renderQuiz("iv");
+        renderQuiz("tr");
+        renderQuiz("rt");
+        renderQuiz("rta");
+
+        // Set active nav item
+        document
+          .getElementById("nav-home")
+          .classList.add("bg-indigo-800/50", "text-white");
+        document.getElementById("nav-home").classList.remove("text-slate-300");
+
+        // Initialize Element SDK
+        if (window.elementSdk) {
+          window.elementSdk.init({
+            defaultConfig,
+            onConfigChange: async (cfg) => {
+              config = { ...config, ...cfg };
+              onConfigChange(config);
+            },
+            mapToCapabilities: (cfg) => ({
+              recolorables: [
+                {
+                  get: () => cfg.primary_color || defaultConfig.primary_color,
+                  set: (v) => window.elementSdk.setConfig({ primary_color: v }),
+                },
+                {
+                  get: () =>
+                    cfg.background_color || defaultConfig.background_color,
+                  set: (v) =>
+                    window.elementSdk.setConfig({ background_color: v }),
+                },
+                {
+                  get: () => cfg.text_color || defaultConfig.text_color,
+                  set: (v) => window.elementSdk.setConfig({ text_color: v }),
+                },
+                {
+                  get: () => cfg.accent_color || defaultConfig.accent_color,
+                  set: (v) => window.elementSdk.setConfig({ accent_color: v }),
+                },
+                {
+                  get: () =>
+                    cfg.secondary_color || defaultConfig.secondary_color,
+                  set: (v) =>
+                    window.elementSdk.setConfig({ secondary_color: v }),
+                },
+              ],
+              borderables: [],
+              fontEditable: {
+                get: () => cfg.font_family || defaultConfig.font_family,
+                set: (v) => window.elementSdk.setConfig({ font_family: v }),
+              },
+              fontSizeable: undefined,
+            }),
+            mapToEditPanelValues: (cfg) =>
+              new Map([
+                ["main_title", cfg.main_title || defaultConfig.main_title],
+                [
+                  "welcome_message",
+                  cfg.welcome_message || defaultConfig.welcome_message,
+                ],
+              ]),
+          });
+        }
+      }
+
+      // Add enter key support for inputs
+      document.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          if (e.target.id === "iv-demo-input") validateAge();
+          if (e.target.id === "tr-demo-input") searchArray();
+          if (e.target.id === "rt-demo-input") addToTotal();
+        }
+      });
+
+      init();
+    </script>
+    <script>
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML =
+              "window.__CF$cv$params={r:'9c74863924e7773d',t:'MTc2OTk4MTE1Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1;
+          a.width = 1;
+          a.style.position = "absolute";
+          a.style.top = 0;
+          a.style.left = 0;
+          a.style.border = "none";
+          a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener)
+            document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) {
+              e(b);
+              "loading" !== document.readyState &&
+                ((document.onreadystatechange = e), c());
+            };
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>
